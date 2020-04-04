@@ -7,9 +7,9 @@ runLoaders({
     loaders: [{
         loader: path.join(__dirname, './src/modify-json-loader.js'),
         options: {
-            name: 'dist.json',
+            name: 'index',
             key: 'name',
-            value: 'thluo'
+            value: 'CoolSummer'
         }
     }],
     context: {

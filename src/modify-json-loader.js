@@ -19,22 +19,18 @@ module.exports = function(source) {
 
   const options = getOptions(this) || {};
 
-  const { name } = options.name;
-
-  const url = interpolateName(this, "[name].[ext]", {
-    source
-  });
-
-  this.emitFile(path.join(__dirname, url), source);
-
   var value = typeof source === "string" ? JSON.parse(source) : source;
+
   if (options.key && options.value) {
     value = TraversalJsonObject(value, options.key, options.value);
   }
-  console.log(value);
+  
   value = JSON.stringify(value) //去掉行和段分隔符
     .replace(/\u2028/g, "\\u2028") // 行分隔符('\u2028')
     .replace(/\u2029/g, "\\u2029"); //一个分段符('\u2029)
+
+  const cpath = path.join(process.cwd(), './dist/' + options.name + '.json')
+  fs.writeFileSync(cpath, value);
 
   return `module.exports = ${value}`;
 };
